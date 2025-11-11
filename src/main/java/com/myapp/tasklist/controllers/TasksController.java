@@ -9,6 +9,7 @@ import com.myapp.tasklist.tasks.Tasks;
 import java.sql.SQLException;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,7 +36,7 @@ public class TasksController {
         Tasks.setNewTask(entity);
     }
 
-    @PostMapping("/tasks/complete")
+    @PatchMapping("/tasks/complete")
     public void setTaskDone(@RequestBody Task.Dto entity) throws SQLException {
         Tasks.setTaskDone(entity);
     }
