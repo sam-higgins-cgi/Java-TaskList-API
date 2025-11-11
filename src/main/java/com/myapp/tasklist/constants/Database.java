@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public final class Database {
     
-    private static final String url = "jdbc:h2:~/Documents/Projects/H2/Java/test";
+    private static final String url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
     private static final String user = "sa";
     private static final String password = "";
 
