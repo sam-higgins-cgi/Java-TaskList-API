@@ -1,43 +1,51 @@
 package com.myapp.tasklist.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
-import com.google.gson.JsonArray;
-import com.myapp.tasklist.schemas.Task;
-import com.myapp.tasklist.tasks.Tasks;
-
-import java.sql.SQLException;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.myapp.tasklist.objects.TaskDto;
+import com.myapp.tasklist.services.TasksService;
 
 
 @RestController
+@RequestMapping("/tasks")
 public class TasksController {
-    
-    @GetMapping("/tasks/all")
-    public JsonArray getTasks() throws SQLException {
-        return Tasks.getAllTaskList();
+
+    private final TasksService tasks;
+
+    public TasksController(TasksService tasks) {
+        this.tasks = tasks;
     }
 
-    @GetMapping("/tasks/todo")
-    public JsonArray getToDo() throws SQLException {
-        return Tasks.getToDoTaskList();
+    @GetMapping("/all")
+    public List<TaskDto> getTasks() {
+        return tasks.getAllTaskList();
     }
 
-    @GetMapping("/tasks/done")    public JsonArray getDone() throws SQLException {
-        return Tasks.getDoneTaskList();
+    @GetMapping("/todo")
+    public List<TaskDto> getToDo() {
+        return tasks.getToDoTaskList();
     }
 
-    @PostMapping("/tasks/add")
-    public void setNewTask(@RequestBody Task.Dto entity) throws SQLException {
-        Tasks.setNewTask(entity);
+    @GetMapping("/done")    
+    public List<TaskDto> getDone() {
+        return tasks.getDoneTaskList();
     }
 
-    @PatchMapping("/tasks/complete")
-    public void setTaskDone(@RequestBody Task.Dto entity) throws SQLException {
-        Tasks.setTaskDone(entity);
+    @PostMapping("/add")
+    public void setNewTask(@RequestBody TaskDto entity) {
+        tasks.setNewTask(entity);
+    }
+
+    @PatchMapping("/complete")
+    public void setTaskDone(@RequestBody TaskDto entity) {
+        tasks.setTaskDone(entity);
     }
 }
