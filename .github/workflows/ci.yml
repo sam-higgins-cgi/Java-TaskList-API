@@ -20,6 +20,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Make Maven Executable
+      run: chmod +x ./mvnw
+
     - name: Test with Maven
       run: ./mvnw -B clean verify --file pom.xml
 
