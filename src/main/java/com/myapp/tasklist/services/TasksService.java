@@ -1,7 +1,7 @@
 package com.myapp.tasklist.services;
 
 import static com.myapp.tasklist.utils.DatabaseUtils.EQUAL;
-import static com.myapp.tasklist.utils.DatabaseUtils.createWhereClause;
+import static com.myapp.tasklist.utils.DatabaseUtils.where;
 
 import java.util.List;
 
@@ -31,24 +31,26 @@ public class TasksService {
     private List<TaskDto> getTaskList(String whereClause) {
 
         String query = String.format("SELECT * FROM tasks WHERE %s", whereClause);
+
+        System.out.println("Executing query: " + query);
         
         return jdbc.query(query, mapper);
     }
 
     public List<TaskDto> getAllTaskList() {
-        return getTaskList("1=1");
+        return getTaskList(where("1", EQUAL, "1"));
     }
 
     public List<TaskDto> getToDoTaskList() {
-        return getTaskList(String.format(createWhereClause(TaskDto.DONE, EQUAL, "false")));
+        return getTaskList(where(TaskDto.DONE, EQUAL, false));
     }
     
     public List<TaskDto> getDoneTaskList() {
-        return getTaskList(String.format(createWhereClause(TaskDto.DONE, EQUAL, "true")));
+        return getTaskList(where(TaskDto.DONE, EQUAL, true));
     }
 
-    public List<TaskDto> getTaskById(int id) {
-        return getTaskList(String.format(createWhereClause(TaskDto.ID, EQUAL, String.valueOf(id))));
+    public TaskDto getTaskById(int id) {
+        return getTaskList(where(TaskDto.ID, EQUAL, id)).get(0);
     }
 
     public void setNewTask(TaskDto dto) {

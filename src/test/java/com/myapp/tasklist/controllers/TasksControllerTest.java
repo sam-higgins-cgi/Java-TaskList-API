@@ -1,4 +1,4 @@
-package com.myapp.tasklist.tasks;
+package com.myapp.tasklist.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -86,7 +86,7 @@ public class TasksControllerTest {
 
     @AfterEach
     public void show() throws Exception{
-        System.err.println("AFTER: " + mvc.perform(get("/tasks/all")).andReturn().getResponse().getContentAsString());
+        System.out.println();
     }
 
 }
